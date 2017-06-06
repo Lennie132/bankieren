@@ -1,0 +1,91 @@
+$color-primary: #5162ff;
+
+$border: #f8f8f8;
+
+.row.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.row.no-gutters > [class^="col-"],
+.row.no-gutters > [class*=" col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+body {
+  //background-color: $color-primary;
+}
+
+header {
+  height: 140px;
+  background-image: url("/bankieren/dist/img/header-background.png");
+  color: #ffffff;
+
+  .menu {
+    .menu__toggle {
+      img {
+        height: 20px;
+        margin: 30px 0 10px;
+      }
+    }
+  }
+
+  .title {
+    h1 {
+      margin-left: 20px;
+      font-size: 28px;
+      font-weight: 300;
+    }
+  }
+}
+
+.categories > div {
+  &:nth-child(odd) {
+    .category {
+      //background-color: red;
+      border-right: 2px solid $border;
+    }
+  }
+}
+
+.category {
+  border-bottom: 2px solid $border;
+  height: 160px;
+  overflow: auto;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+
+  .category__link {
+    overflow: auto;
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: #000000;
+
+    &:hover, &:focus {
+      background-color: $border;
+      text-decoration: none;
+    }
+  }
+  .category__name {
+    width: 100%;
+    margin-top: 38px;
+    font-weight: 300;
+    text-align: center;
+  }
+  .category__price {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .category__color {
+    height: 3px;
+    width: 18px;
+    margin: 20px auto 0;
+    background-color: $color-primary;
+  }
+}
