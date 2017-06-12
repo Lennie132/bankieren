@@ -1,3 +1,10 @@
+<?php
+include "global/general.php";
+
+$categories = Category::get_all();
+
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -7,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Ondiep">
     <meta name="author" content="">
-    <title>Ondiep</title>
+    <title>Reckoning</title>
 
     <!-- Custom Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -40,38 +47,22 @@
 
 <div class="">
     <div>
-        <div class="row no-gutters categories">
-            <div class="col-xs-6">
-                <div class="category">
-                    <a class="category__link" href="">
-                        <h3 class="category__name">Shopping</h3>
-                        <span class="category__price">€86,40</span>
-                        <div class="category__color"></div>
-                    </a>
-                </div>
+        <?php if (!empty($categories)) { ?>
+            <div class="row no-gutters categories">
+                <?php foreach ($categories as $category) {  ?>
+                    <div class="col-xs-6">
+                        <div class="category">
+                            <a class="category__link" href="">
+                                <h3 class="category__name"><?= $category->getName(); ?></h3>
+                                <span class="category__price"><?= $category->getGoalAmount(); ?></span>
+                                <div class="category__colour"
+                                     style="background-color: <?= $category->getColour() ?>"></div>
+                            </a>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
-            <div class="col-xs-6">
-                <div class="category">
-                    <div class="category__name"></div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="category">
-                    <div class="category__name"></div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="category">
-                    <div class="category__name"></div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="category">
-                    <div class="category__name"></div>
-                </div>
-            </div>
-
-        </div>
+        <?php } ?>
     </div>
 
 
