@@ -1,0 +1,40 @@
+$color-primary: #5162ff;
+
+$border: #f8f8f8;
+
+.transactions.transactions--list {
+  .transaction {
+    position: relative;
+    overflow: auto;
+    padding: 5px;
+    border-bottom: $border solid 2px;
+
+    &:first-of-type {
+      border-top: $border solid 2px;
+    }
+    &:hover, &:focus {
+      background-color: $border;
+    }
+    .transaction__date {
+      display: inline-block;
+      float: left;
+      margin: 6px 8px 0;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+    }
+    .transaction__store {
+      display: inline-block;
+      float: left;
+      margin: 0;
+      font-weight: 300;
+      line-height: 28px;
+    }
+    .transaction__amount {
+      position: absolute;
+      right: 10px;
+      line-height: 28px;
+    }
+  }
+}
+

@@ -1,0 +1,60 @@
+$color-primary: #5162ff;
+
+$border: #f8f8f8;
+
+
+header {
+  height: 140px;
+  background-image: url("/bankieren/dist/img/header-background.png");
+  color: #ffffff;
+
+  .menu {
+    .menu__toggle {
+      float: left;
+      img {
+        height: 20px;
+        margin: 30px 0 10px;
+      }
+      i {
+        margin: 16px 0 0;
+        float: left;
+        &.md-36 {
+          margin: 23px 0 0;
+        }
+      }
+      span {
+        float: left;
+        margin: 27px 0 0;
+        line-height: 30px;
+      }
+    }
+    .menu__edit_category {
+      float: right;
+      i {
+        margin: 23px 0 0;
+      }
+    }
+  }
+
+  .title {
+    h1 {
+      margin-left: 20px;
+      font-size: 28px;
+      font-weight: 300;
+    }
+
+    &.title--colour {
+      .title__colour {
+        display: inline-block;
+        margin: 0 0 2px 20px;
+        height: 15px;
+        width: 30px;
+        border: $border solid 1px;
+      }
+      h1 {
+        display: inline-block;
+        margin-left: 10px;
+      }
+    }
+  }
+}

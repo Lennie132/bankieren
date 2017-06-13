@@ -1,0 +1,55 @@
+$color-primary: #5162ff;
+
+$border: #f8f8f8;
+
+
+
+.categories > div {
+  &:nth-child(odd) {
+    .category {
+      //background-color: red;
+      border-right: 2px solid $border;
+    }
+  }
+}
+
+.category {
+  border-bottom: 2px solid $border;
+  height: 160px;
+  overflow: auto;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+
+  .category__link {
+    overflow: auto;
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: #000000;
+
+    &:hover, &:focus {
+      background-color: $border;
+      text-decoration: none;
+    }
+  }
+  .category__name {
+    width: 100%;
+    margin-top: 38px;
+    font-weight: 300;
+    text-align: center;
+  }
+  .category__price {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .category__colour {
+    height: 3px;
+    width: 18px;
+    margin: 20px auto 0;
+    background-color: $color-primary;
+  }
+}

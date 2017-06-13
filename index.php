@@ -3,6 +3,11 @@ include "global/general.php";
 
 $categories = Category::get_all();
 
+
+$unsigned = Transaction::get_all_unsigned();
+
+//print_pre($unsigned);
+
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +23,7 @@ $categories = Category::get_all();
 
     <!-- Custom Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="dist/css/style.min.css" type="text/css">
@@ -25,12 +31,41 @@ $categories = Category::get_all();
 
 <body>
 
+<?php if (!empty($unsigned)) {
+    $item = $unsigned[0]; ?>
+    <div class="unsigned">
+        <div class="unsigned__inner">
+            <div class="unsigned__count"><span><?= count($unsigned); ?> nieuwe transacties</span></div>
+            <h3 class="unsigned__price">€ <?= $item->getAmount(); ?></h3>
+            <h4 class="unsigned__store"><?= $item->getStore(); ?></h4>
+            <div class="unsigned__categories">
+                <form action="" method="post">
+                    <input type="hidden" name="sign" value="true">
+                    <input type="hidden" name="transaction" value="<?= $item->getId(); ?>">
+                    <?php if (!empty($categories)) { ?>
+                        <?php foreach ($categories as $category) { ?>
+                            <div class="unsigned__category">
+                                <button name="category" value="<?= $category->getId(); ?>">
+                                    <div class="category__colour"
+                                         style="background-color: <?= $category->getColour() ?>"></div>
+                                    <h3 class="category__name"><?= $category->getName(); ?></h3>
+                                    <span class="category__price"><?= $category->getAmount(); ?></span>
+                                </button>
+                            </div>
+                        <?php } ?>
+                    <?php } ?>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
 <header>
     <div class="container">
         <div class="row">
             <div class="menu">
                 <div class="col-xs-12">
-                    <div class="menu__toggle"><img src="/bankieren/dist/img/icon-menu.png" alt=""></div>
+                    <div class="menu__toggle"><i class="material-icons md-36">euro_symbol</i> <span>Reckoning</span></div>
                 </div>
             </div>
         </div>
@@ -49,12 +84,12 @@ $categories = Category::get_all();
     <div>
         <?php if (!empty($categories)) { ?>
             <div class="row no-gutters categories">
-                <?php foreach ($categories as $category) {  ?>
+                <?php foreach ($categories as $category) { ?>
                     <div class="col-xs-6">
                         <div class="category">
-                            <a class="category__link" href="">
+                            <a class="category__link" href="single.php?id=<?= $category->getId(); ?>">
                                 <h3 class="category__name"><?= $category->getName(); ?></h3>
-                                <span class="category__price"><?= $category->getGoalAmount(); ?></span>
+                                <span class="category__price"><?= $category->getAmount(); ?></span>
                                 <div class="category__colour"
                                      style="background-color: <?= $category->getColour() ?>"></div>
                             </a>

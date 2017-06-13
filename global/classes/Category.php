@@ -5,9 +5,11 @@ class Category {
     private $id;
     private $name;
     private $colour;
+    private $amount;
     private $goal_description;
     private $goal_amount;
     private $goal_date;
+    private $transactions;
 
     function __construct() {
 
@@ -16,7 +18,7 @@ class Category {
     /**
      * @return int
      */
-    public function getId():int {
+    public function getId(): int {
         return $this->id;
     }
 
@@ -24,7 +26,7 @@ class Category {
      * @param int $id
      * @return Category
      */
-    public function setId($id):self {
+    public function setId(int $id): self {
         $this->id = $id;
         return $this;
     }
@@ -32,7 +34,7 @@ class Category {
     /**
      * @return string
      */
-    public function getName():string {
+    public function getName(): string {
         return $this->name;
     }
 
@@ -40,7 +42,7 @@ class Category {
      * @param string $name
      * @return Category
      */
-    public function setName($name):self {
+    public function setName(string $name): self {
         $this->name = $name;
         return $this;
     }
@@ -48,7 +50,7 @@ class Category {
     /**
      * @return string
      */
-    public function getColour():string {
+    public function getColour(): string {
         return $this->colour;
     }
 
@@ -56,7 +58,7 @@ class Category {
      * @param string $colour
      * @return Category
      */
-    public function setColour($colour):self {
+    public function setColour(string $colour): self {
         $this->colour = $colour;
         return $this;
     }
@@ -64,7 +66,23 @@ class Category {
     /**
      * @return string
      */
-    public function getGoalDescription():string {
+    public function getAmount(): string {
+        return  "€ " . str_replace(".", ",", $this->amount);
+    }
+
+    /**
+     * @param mixed $amount
+     * @return Category
+     */
+    public function setAmount(string $amount): self {
+        $this->amount = $amount;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoalDescription(): string {
         return $this->goal_description;
     }
 
@@ -72,50 +90,66 @@ class Category {
      * @param string $goal_description
      * @return Category
      */
-    public function setGoalDescription($goal_description):self {
+    public function setGoalDescription(string $goal_description): self {
         $this->goal_description = $goal_description;
         return $this;
     }
 
     /**
-     * @return double
+     * @return string
      */
-    public function getGoalAmount() {
-        $amount = str_replace(".", ",", $this->goal_amount);
+    public function getGoalAmount(): string {
+        $amount = "€ " . str_replace(".", ",", $this->goal_amount);
         return $amount;
     }
 
     /**
-     * @param double $goal_amount
+     * @param float $goal_amount
      * @return Category
      */
-    public function setGoalAmount($goal_amount):self {
+    public function setGoalAmount(float $goal_amount): self {
         $this->goal_amount = $goal_amount;
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return string
      */
-    public function getGoalDate() {
+    public function getGoalDate(): string {
         return $this->goal_date;
     }
 
     /**
-     * @param DateTime $goal_date
+     * @param string $goal_date
      * @return Category
      */
-    public function setGoalDate($goal_date):self {
+    public function setGoalDate(string $goal_date): self {
         $this->goal_date = $goal_date;
+        return $this;
+    }
+
+    /**
+     * @return Transaction[]
+     */
+    public function getTransactions(): array {
+        return $this->transactions;
+    }
+
+    /**
+     * @param array $transactions
+     * @return Category
+     */
+    public function setTransactions(array $transactions): self {
+        $this->transactions = $transactions;
         return $this;
     }
 
     /**
      * @return Category[]
      */
-    static function get_all():array {
+    static function get_all(): array {
         $db = new Database();
-        $db->query("SELECT * FROM `categories`");
+        $db->query('SELECT * FROM `categories`');
         $db->execute();
         $results = $db->resultset();
         $items = array();
@@ -126,14 +160,39 @@ class Category {
                     ->setId($item['id'])
                     ->setName($item['name'])
                     ->setColour($item['colour'])
+                    ->setAmount($item['amount'])
                     ->setGoalDescription($item['goal_description'])
-                    ->setGoalAmount($item['goal_amount'])
+                    ->setGoalAmount(floatval($item['goal_amount']))
                     ->setGoalDate($item['goal_date']);
 
                 $items[] = $category;
             }
         }
         return $items;
+    }
+
+    static function get_single(int $id): Category {
+        $db = new Database();
+        $db->query('SELECT * FROM `categories` WHERE `id`=:id');
+        $db->bind(':id', $id, PDO::PARAM_INT);
+        $db->execute();
+        $item = $db->single();
+        if (!empty($item)) {
+            $category = new Category();
+            $category
+                ->setId($item['id'])
+                ->setName($item['name'])
+                ->setColour($item['colour'])
+                ->setAmount($item['amount'])
+                ->setGoalDescription($item['goal_description'])
+                ->setGoalAmount($item['goal_amount'])
+                ->setGoalDate($item['goal_date']);
+
+
+            $category->setTransactions(Transaction::get_all_by_category($category->getId()));
+            return $category;
+        }
+        return null;
     }
 
 }
