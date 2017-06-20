@@ -2,13 +2,13 @@
 
 class Category {
 
-    private $id;
-    private $name;
-    private $colour;
+    private $id = 0;
+    private $name = "";
+    private $colour = "";
     private $amount;
-    private $goal_description;
+    private $goal_description = "";
     private $goal_amount;
-    private $goal_date;
+    private $goal_date = "";
     private $transactions;
 
     function __construct() {
@@ -187,7 +187,6 @@ class Category {
                 ->setGoalDescription($item['goal_description'])
                 ->setGoalAmount($item['goal_amount'])
                 ->setGoalDate($item['goal_date']);
-
 
             $category->setTransactions(Transaction::get_all_by_category($category->getId()));
             return $category;
