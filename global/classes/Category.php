@@ -71,6 +71,13 @@ class Category {
     }
 
     /**
+     * @return int
+     */
+    public function getAmountRaw(): int {
+        return  $this->amount;
+    }
+
+    /**
      * @param mixed $amount
      * @return Category
      */
@@ -101,6 +108,13 @@ class Category {
     public function getGoalAmount(): string {
         $amount = "€ " . str_replace(".", ",", $this->goal_amount);
         return $amount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGoalAmountRaw(): int {
+        return $this->goal_amount;
     }
 
     /**

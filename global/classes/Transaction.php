@@ -95,7 +95,7 @@ class Transaction {
      */
     static function get_all_by_category(int $id): array {
         $db = new Database();
-        $db->query('SELECT * FROM `transactions` WHERE `category_id`=:category_id');
+        $db->query('SELECT * FROM `transactions` WHERE `category_id`=:category_id ORDER BY `datetime` DESC');
         $db->bind(':category_id', $id, PDO::PARAM_INT);
         $db->execute();
         $results = $db->resultset();
@@ -168,13 +168,17 @@ class Transaction {
         $db->bind(':category_id', $category_id, PDO::PARAM_INT);
         $db->bind(':id', $id, PDO::PARAM_INT);
         $db->execute();
-        $db->query("SELECT `store` FROM `transactions` WHERE `id`=:id");
+        $db->query("SELECT `store`, `amount` FROM `transactions` WHERE `id`=:id");
         $db->bind(':id', $id, PDO::PARAM_INT);
         $db->execute();
         $transaction = $db->single();
         $db->query("INSERT INTO `combinations` (`store`, `category_id`) VALUES (:store, :category_id)");
         $db->bind(':store', $transaction['store'], PDO::PARAM_STR);
         $db->bind(':category_id', $category_id, PDO::PARAM_INT);
+        $db->execute();
+        $db->query('UPDATE `categories` SET `amount` = `amount` - :amount WHERE `id` = :id');
+        $db->bind(':amount', $transaction['amount'], PDO::PARAM_STR);
+        $db->bind(':id', $category_id, PDO::PARAM_INT);
         $db->execute();
     }
 }
