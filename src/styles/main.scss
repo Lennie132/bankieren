@@ -28,5 +28,16 @@ $border: #f8f8f8;
 .material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
 
 body {
-  //background-color: $color-primary;
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 100%;
+}
+
+button {
+  background: transparent;
+  border: none;
 }

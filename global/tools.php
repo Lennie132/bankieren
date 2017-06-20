@@ -14,8 +14,8 @@ function get_url_base() {
     );
     if ($url == "http://localhost") {
         $url .= "/bankieren";
-    } else if ($url == "http://stud.hosted.hr.nl") {
-        $url .= "/bankieren";
+    } else if ($url == "https://stud.hosted.hr.nl") {
+        $url .= "/0893738/bankieren";
     }
     return $url;
 }
@@ -29,8 +29,8 @@ function get_url_current() {
     );
     if ($url == "http://localhost") {
         $url .= "/bankieren";
-    } else if ($url == "http://stud.hosted.hr.nl") {
-        $url .= "/bankieren";
+    } else if ($url == "https://stud.hosted.hr.nl") {
+        $url .= "/0893738/bankieren";
     }
     return $url;
 }
